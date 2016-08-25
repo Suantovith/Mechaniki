@@ -15,6 +15,7 @@ namespace Engine
         public int moveScreenSpeed;
         public int movePlayerSpeed;
         public bool isCollisionEnabled;
+        public int state;
 
         public Variables()
         {
@@ -26,7 +27,8 @@ namespace Engine
             playerRectangle = new Rectangle(0, 0, 64, 64);
             editorCursorRectangle = new Rectangle(0, 0, blockWidth, blockHeight);
             movePlayerSpeed = 2;
-            isCollisionEnabled = false;
+            isCollisionEnabled = true;
+            state = 0;
             blocks = new List<Block>();
         }
     }
