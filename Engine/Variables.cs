@@ -1,11 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Engine
 {
     public class Variables
     {
+        [XmlIgnore]
         public List<Block> blocks;
+        [XmlIgnore]
+        public string configFile;
+
         public Rectangle playerRectangle;
         public Rectangle editorCursorRectangle;
         public int blockWidth;
@@ -29,6 +34,7 @@ namespace Engine
             movePlayerSpeed = 2;
             isCollisionEnabled = true;
             state = 0;
+            configFile = "config.xml";
             blocks = new List<Block>();
         }
     }

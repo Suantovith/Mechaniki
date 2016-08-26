@@ -13,6 +13,7 @@ namespace Engine
         KeyState keyState;
         Editor editor;
         Travel travel;
+        Config config;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,7 +37,9 @@ namespace Engine
             map = new Map();
             keyState = new KeyState();
             editor = new Editor();
-            travel = new Engine.Travel();
+            travel = new Travel();
+            config = new Config(variables);
+            variables = config.LoadConfig(variables);
             if (variables.state == 0)
             {
                 travel.Init(map, variables, this.Content);
