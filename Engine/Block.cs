@@ -7,7 +7,9 @@ namespace Engine
     {
         public Texture2D texture { set; get; }
         public bool collision { set; get; }
-        public Rectangle position { set; get; }
+        public Rectangle spriteRectangle { set; get; }
+
+        public Rectangle hitboxRectangle { set; get; }
 
 
     }

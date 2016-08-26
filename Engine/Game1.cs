@@ -76,7 +76,7 @@ namespace Engine
             spriteBatch.Begin();
             foreach (Block block in variables.blocks)
             {
-                spriteBatch.Draw(block.texture, new Rectangle(block.position.X + variables.moveScreenX, block.position.Y + variables.moveScreenY, variables.blockWidth, variables.blockHeight), Color.White);
+                spriteBatch.Draw(block.texture, new Rectangle(block.spriteRectangle.X + variables.moveScreenX, block.spriteRectangle.Y + variables.moveScreenY, variables.blockWidth, variables.blockHeight), Color.White);
 
             }
             

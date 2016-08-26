@@ -11,7 +11,7 @@ namespace Engine
         {
             if (keyState.IsKeyReleased(Keys.Enter))
             {
-                variables.blocks.Add(new Block { position = new Rectangle(variables.editorCursorRectangle.X - variables.moveScreenX, variables.editorCursorRectangle.Y - variables.moveScreenY, variables.blockWidth, variables.blockHeight), texture = content.Load<Texture2D>("Textures/3"), collision = true });
+                variables.blocks.Add(new Block { spriteRectangle = new Rectangle(variables.editorCursorRectangle.X - variables.moveScreenX, variables.editorCursorRectangle.Y - variables.moveScreenY, variables.blockWidth, variables.blockHeight), hitboxRectangle = new Rectangle (0,0,64,64), texture = content.Load<Texture2D>("Textures/3"), collision = true });
             }
             if (keyState.IsKeyReleased(Keys.L))
             {

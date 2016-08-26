@@ -11,7 +11,8 @@ namespace Engine
         [XmlIgnore]
         public string configFile;
 
-        public Rectangle playerRectangle;
+        public Rectangle playerSpriteRectangle;
+        public Rectangle playerHitboxRectangle;
         public Rectangle editorCursorRectangle;
         public int blockWidth;
         public int blockHeight;
@@ -29,7 +30,8 @@ namespace Engine
             blockWidth = 64;
             blockHeight = 64;
             moveScreenSpeed = 2;
-            playerRectangle = new Rectangle(0, 0, 64, 64);
+            playerSpriteRectangle = new Rectangle(0, 0, 64, 64);
+            playerHitboxRectangle = new Rectangle(0, 0, 64, 64);
             editorCursorRectangle = new Rectangle(0, 0, blockWidth, blockHeight);
             movePlayerSpeed = 2;
             isCollisionEnabled = true;

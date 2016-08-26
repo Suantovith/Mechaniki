@@ -18,9 +18,9 @@ namespace Engine
                 {
                     string line = sr.ReadToEnd();
                     string[] lines = line.Split(' ');
-                    for (int i = 0; i < lines.Length; i += 4)
+                    for (int i = 0; i < lines.Length; i += 8)
                     {
-                        elements.Add(new Block { position = new Rectangle(Convert.ToInt32(lines[i]), Convert.ToInt32(lines[i + 1]), variables.blockWidth, variables.blockHeight), texture = content.Load<Texture2D>(lines[i + 2]), collision = Convert.ToBoolean(lines[i + 3]) });
+                        elements.Add(new Block { spriteRectangle = new Rectangle(Convert.ToInt32(lines[i]), Convert.ToInt32(lines[i + 1]), variables.blockWidth, variables.blockHeight), hitboxRectangle = new Rectangle(Convert.ToInt32(lines[i + 2]), Convert.ToInt32(lines[i + 3]), Convert.ToInt32(lines[i + 4]), Convert.ToInt32(lines[i + 5])), texture = content.Load<Texture2D>(lines[i + 6]), collision = Convert.ToBoolean(lines[i + 7]) });
                     }
 
                 }
@@ -36,7 +36,7 @@ namespace Engine
             {
                 foreach (Block block in elements)
                 {
-                    path.Write(block.position.X.ToString() + " " + block.position.Y.ToString() + " " + block.texture.ToString() + " " + block.collision.ToString() + " ");
+                    path.Write(block.spriteRectangle.X.ToString() + " " + block.spriteRectangle.Y.ToString() + " " + block.hitboxRectangle.X + " " + block.hitboxRectangle.Y + " " + block.hitboxRectangle.Width + " " + block.hitboxRectangle.Height + " " + block.texture.ToString() + " " + block.collision.ToString() + " ");
 
                 }
             }

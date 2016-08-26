@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace Engine
 {
@@ -10,88 +11,95 @@ namespace Engine
         public void Init(Map map, Variables variables, ContentManager content)
         {
             variables.blocks.Clear();
-            map.LoadMap(variables.blocks, "mapa", content, variables);
+            if (File.Exists("mapa.map"))
+            {
+                map.LoadMap(variables.blocks, "mapa", content, variables);
+            }
         }
         public void Update(Variables variables, GraphicsDevice graphicsDevice)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                if (variables.playerRectangle.X <= (graphicsDevice.Viewport.Width / 100) * 2)
+                if (variables.playerSpriteRectangle.X <= (graphicsDevice.Viewport.Width / 100) * 2)
                 {
                     variables.moveScreenX += variables.moveScreenSpeed;
                 }
                 else
                 {
-                    variables.playerRectangle.X -= variables.movePlayerSpeed;
+                    variables.playerSpriteRectangle.X -= variables.movePlayerSpeed;
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                if (variables.playerRectangle.X >= (graphicsDevice.Viewport.Width / 100) * 98)
+                if (variables.playerSpriteRectangle.X >= (graphicsDevice.Viewport.Width / 100) * 98)
                 {
                     variables.moveScreenX -= variables.moveScreenSpeed;
                 }
                 else
                 {
-                    variables.playerRectangle.X += variables.movePlayerSpeed;
+                    variables.playerSpriteRectangle.X += variables.movePlayerSpeed;
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                if (variables.playerRectangle.Y <= (graphicsDevice.Viewport.Height / 100) * 2)
+                if (variables.playerSpriteRectangle.Y <= (graphicsDevice.Viewport.Height / 100) * 2)
                 {
                     variables.moveScreenY += variables.moveScreenSpeed;
                 }
                 else
                 {
-                    variables.playerRectangle.Y -= variables.movePlayerSpeed;
+                    variables.playerSpriteRectangle.Y -= variables.movePlayerSpeed;
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                if (variables.playerRectangle.Y >= (graphicsDevice.Viewport.Height / 100) * 99)
+                if (variables.playerSpriteRectangle.Y >= (graphicsDevice.Viewport.Height / 100) * 99)
                 {
                     variables.moveScreenY -= variables.moveScreenSpeed;
                 }
                 else
                 {
-                    variables.playerRectangle.Y += variables.movePlayerSpeed;
+                    variables.playerSpriteRectangle.Y += variables.movePlayerSpeed;
                 }
             }
             if (variables.isCollisionEnabled) { CheckForCollisions(variables); }
         }
         public void Draw(SpriteBatch spriteBatch, ContentManager content, Variables variables)
         {
-            spriteBatch.Draw(content.Load<Texture2D>("Textures/2"), variables.playerRectangle, Color.White);
+            spriteBatch.Draw(content.Load<Texture2D>("Textures/2"), variables.playerSpriteRectangle, Color.White);
         }
         void CheckForCollisions(Variables variables)
         {
+            Rectangle playerRectangle;
+            Rectangle working;
+            Rectangle collisionRectangle;
             foreach (Block block in variables.blocks)
             {
                 if (block.collision)
                 {
-                    Rectangle working = new Rectangle(block.position.X + variables.moveScreenX, block.position.Y + variables.moveScreenY, variables.blockWidth, variables.blockHeight);
-                    Rectangle collisionRectangle = Rectangle.Intersect(working, variables.playerRectangle);
+                    working = new Rectangle(block.spriteRectangle.X + block.hitboxRectangle.X + variables.moveScreenX, block.spriteRectangle.Y + block.hitboxRectangle.Y + variables.moveScreenY, block.hitboxRectangle.Width, block.hitboxRectangle.Height);
+                    playerRectangle = new Rectangle(variables.playerSpriteRectangle.X + variables.playerHitboxRectangle.X,variables.playerSpriteRectangle.Y + variables.playerHitboxRectangle.Y,variables.playerHitboxRectangle.Width,variables.playerHitboxRectangle.Height);
+                    collisionRectangle = Rectangle.Intersect(working, playerRectangle);
                     if (collisionRectangle.Height < collisionRectangle.Width)
                     {
-                        if (variables.playerRectangle.Center.Y > working.Center.Y)
+                        if (playerRectangle.Center.Y > working.Center.Y)
                         {
-                            variables.playerRectangle.Y += collisionRectangle.Height;
+                            variables.playerSpriteRectangle.Y += collisionRectangle.Height;
                         }
                         else
                         {
-                            variables.playerRectangle.Y -= collisionRectangle.Height;
+                            variables.playerSpriteRectangle.Y -= collisionRectangle.Height;
                         }
                     }
                     else if (collisionRectangle.Width < collisionRectangle.Height)
                     {
-                        if (variables.playerRectangle.Center.X > working.Center.X)
+                        if (playerRectangle.Center.X > working.Center.X)
                         {
-                            variables.playerRectangle.X += collisionRectangle.Width;
+                            variables.playerSpriteRectangle.X += collisionRectangle.Width;
                         }
                         else
                         {
-                            variables.playerRectangle.X -= collisionRectangle.Width;
+                            variables.playerSpriteRectangle.X -= collisionRectangle.Width;
                         }
                     }
                 }
